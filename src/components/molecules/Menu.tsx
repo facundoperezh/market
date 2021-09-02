@@ -9,6 +9,7 @@ import Badge from '../atoms/Badge'
 import Logo from '../atoms/Logo'
 import Networks from './UserPreferences/Networks'
 import SearchBar from './SearchBar'
+import { ConnectSample } from '../terra/Connect'
 
 const Wallet = loadable(() => import('./Wallet'))
 
@@ -33,14 +34,15 @@ function MenuLink({ item }: { item: MenuItem }) {
 }
 
 export default function Menu(): ReactElement {
-  const { menu, siteTitle } = useSiteMetadata()
+  const { menu } = useSiteMetadata()
+  const siteTitle = 'Tsunami Market'
 
   return (
     <nav className={styles.menu}>
       <Link to="/" className={styles.logo}>
         <Logo noWordmark />
         <h1 className={styles.title}>
-          {siteTitle} <Badge label="v3" />
+          {siteTitle} <Badge label="Beta" />
         </h1>
       </Link>
 
@@ -55,6 +57,7 @@ export default function Menu(): ReactElement {
       <div className={styles.actions}>
         <SearchBar />
         <Networks />
+        <ConnectSample />
         <Wallet />
         <UserPreferences />
       </div>
