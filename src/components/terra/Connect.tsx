@@ -1,7 +1,7 @@
 import { useWallet, WalletStatus } from '@terra-money/wallet-provider'
 import React from 'react'
 
-export function ConnectSample() {
+export function Connect() {
   const {
     status,
     network,
@@ -13,44 +13,36 @@ export function ConnectSample() {
     disconnect
   } = useWallet()
 
+  console.log(
+    `Wallet: ${JSON.stringify(
+      {
+        status,
+        network,
+        wallets,
+        availableConnectTypes,
+        availableInstallTypes
+      },
+      null,
+      2
+    )}`
+  )
   return (
     <div>
-      <h1>Connect Sample</h1>
-      <section>
-        <pre>
-          {JSON.stringify(
-            {
-              status,
-              network,
-              wallets,
-              availableConnectTypes,
-              availableInstallTypes
-            },
-            null,
-            2
-          )}
-        </pre>
-      </section>
-
       <footer>
         {status === WalletStatus.WALLET_NOT_CONNECTED && (
           <>
-            {availableInstallTypes.map((connectType) => (
-              <button
-                key={'install-' + connectType}
-                onClick={() => install(connectType)}
-              >
-                Install {connectType}
-              </button>
-            ))}
-            {availableConnectTypes.map((connectType) => (
-              <button
-                key={'connect-' + connectType}
-                onClick={() => connect(connectType)}
-              >
-                Connect {connectType}
-              </button>
-            ))}
+            {availableConnectTypes.map((connectType) => {
+              if (connectType === 'CHROME_EXTENSION') {
+                return (
+                  <button
+                    key={'connect-' + connectType}
+                    onClick={() => connect(connectType)}
+                  >
+                    Connect Terra Station
+                  </button>
+                )
+              }
+            })}
           </>
         )}
         {status === WalletStatus.WALLET_CONNECTED && (
