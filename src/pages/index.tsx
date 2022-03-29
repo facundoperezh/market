@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react'
 import { PageProps } from 'gatsby'
 import PageHome from '../components/pages/Home'
-import { useSiteMetadata } from '../hooks/useSiteMetadata'
+// import { useSiteMetadata } from '../hooks/useSiteMetadata'
 import Page from '../components/templates/Page'
 
 export default function PageGatsbyHome(props: PageProps): ReactElement {
-  const { siteTitle, siteTagline } = useSiteMetadata()
+  // const { siteTitle, siteTagline } = useSiteMetadata()
+  const siteTitle = 'Tsunami Market'
+  const siteTagline = ''
 
   return (
     <Page

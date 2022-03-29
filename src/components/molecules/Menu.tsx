@@ -9,6 +9,27 @@ import Badge from '../atoms/Badge'
 import Logo from '../atoms/Logo'
 import Networks from './UserPreferences/Networks'
 import SearchBar from './SearchBar'
+import { Connect } from '../terra/Connect'
+import { NetworkInfo, WalletProvider } from '@terra-money/wallet-provider'
+
+const mainnet = {
+  name: 'mainnet',
+  chainID: 'columbus-4',
+  lcd: 'https://lcd.terra.dev'
+}
+
+const testnet = {
+  name: 'testnet',
+  chainID: 'tequila-0004',
+  lcd: 'https://tequila-lcd.terra.dev'
+}
+
+// WalletConnect separates chainId by number.
+// Currently TerraStation Mobile uses 0 as Testnet, 1 as Mainnet.
+const walletConnectChainIds: Record<number, NetworkInfo> = {
+  0: testnet,
+  1: mainnet
+}
 
 const Wallet = loadable(() => import('./Wallet'))
 
@@ -33,14 +54,15 @@ function MenuLink({ item }: { item: MenuItem }) {
 }
 
 export default function Menu(): ReactElement {
-  const { menu, siteTitle } = useSiteMetadata()
+  const { menu } = useSiteMetadata()
+  const siteTitle = 'Tsunami Market'
 
   return (
     <nav className={styles.menu}>
       <Link to="/" className={styles.logo}>
         <Logo noWordmark />
         <h1 className={styles.title}>
-          {siteTitle} <Badge label="v3" />
+          {siteTitle} <Badge label="Beta" />
         </h1>
       </Link>
 
@@ -55,6 +77,12 @@ export default function Menu(): ReactElement {
       <div className={styles.actions}>
         <SearchBar />
         <Networks />
+        <WalletProvider
+          defaultNetwork={testnet}
+          walletConnectChainIds={walletConnectChainIds}
+        >
+          <Connect />
+        </WalletProvider>
         <Wallet />
         <UserPreferences />
       </div>
